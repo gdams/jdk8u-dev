@@ -70,7 +70,7 @@ all: images docs
 
 # Setup a rule for SPEC file that fails if executed. This check makes sure the configuration
 # is up to date after changes to configure
-$(SPEC): $(wildcard $(SRC_ROOT)/common/autoconf/*)
+$(SPEC): $(wildcard $(SRC_ROOT)/make/autoconf/*)
 	@$(ECHO) "ERROR: $(SPEC) is not up to date."
 	@$(ECHO) "Please rerun configure! Easiest way to do this is by running"
 	@$(ECHO) "'make reconfigure'."

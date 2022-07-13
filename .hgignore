@@ -3,7 +3,10 @@
 nbproject/private/
 ^webrev
 ^.src-rev$
-.DS_Store
+^.jib/
+\.DS_Store
+\.metadata/
+\.recommenders/
 # Default ignored files
 .idea/workspace.xml
 .*/.git/.*
