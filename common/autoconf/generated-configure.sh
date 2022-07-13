@@ -1015,7 +1015,6 @@ infodir
 docdir
 oldincludedir
 includedir
-runstatedir
 localstatedir
 sharedstatedir
 sysconfdir
@@ -1259,7 +1258,6 @@ datadir='${datarootdir}'
 sysconfdir='${prefix}/etc'
 sharedstatedir='${prefix}/com'
 localstatedir='${prefix}/var'
-runstatedir='${localstatedir}/run'
 includedir='${prefix}/include'
 oldincludedir='/usr/include'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
@@ -1512,15 +1510,6 @@ do
   | -silent | --silent | --silen | --sile | --sil)
     silent=yes ;;
 
-  -runstatedir | --runstatedir | --runstatedi | --runstated \
-  | --runstate | --runstat | --runsta | --runst | --runs \
-  | --run | --ru | --r)
-    ac_prev=runstatedir ;;
-  -runstatedir=* | --runstatedir=* | --runstatedi=* | --runstated=* \
-  | --runstate=* | --runstat=* | --runsta=* | --runst=* | --runs=* \
-  | --run=* | --ru=* | --r=*)
-    runstatedir=$ac_optarg ;;
-
   -sbindir | --sbindir | --sbindi | --sbind | --sbin | --sbi | --sb)
     ac_prev=sbindir ;;
   -sbindir=* | --sbindir=* | --sbindi=* | --sbind=* | --sbin=* \
@@ -1658,7 +1647,7 @@ fi
 for ac_var in	exec_prefix prefix bindir sbindir libexecdir datarootdir \
 		datadir sysconfdir sharedstatedir localstatedir includedir \
 		oldincludedir docdir infodir htmldir dvidir pdfdir psdir \
-		libdir localedir mandir runstatedir
+		libdir localedir mandir
 do
   eval ac_val=\$$ac_var
   # Remove trailing slashes.
@@ -1811,7 +1800,6 @@ Fine tuning of the installation directories:
   --sysconfdir=DIR        read-only single-machine data [PREFIX/etc]
   --sharedstatedir=DIR    modifiable architecture-independent data [PREFIX/com]
   --localstatedir=DIR     modifiable single-machine data [PREFIX/var]
-  --runstatedir=DIR       modifiable per-process data [LOCALSTATEDIR/run]
   --libdir=DIR            object code libraries [EPREFIX/lib]
   --includedir=DIR        C header files [PREFIX/include]
   --oldincludedir=DIR     C header files for non-gcc [/usr/include]
@@ -3846,20 +3834,6 @@ cygwin_help() {
       PKGHANDLER_COMMAND="( cd <location of cygwin setup.exe> && cmd /c setup -q -P make )"
       HELP_MSG="You might be able to fix this by running '$PKGHANDLER_COMMAND'."
       ;;
-    freetype)
-      HELP_MSG="
-The freetype library can now be build during the configure process.
-Download the freetype sources and unpack them into an arbitrary directory:
-
-wget http://download.savannah.gnu.org/releases/freetype/freetype-2.5.3.tar.gz
-tar -xzf freetype-2.5.3.tar.gz
-
-Then run configure with '--with-freetype-src=<freetype_src>'. This will
-automatically build the freetype library into '<freetype_src>/lib64' for 64-bit
-builds or into '<freetype_src>/lib32' for 32-bit builds.
-Afterwards you can always use '--with-freetype-include=<freetype_src>/include'
-and '--with-freetype-lib=<freetype_src>/lib32|64' for other builds."
-      ;;
   esac
 }
 
@@ -4417,7 +4391,7 @@ VS_TOOLSET_SUPPORTED_2019=false
 #CUSTOM_AUTOCONF_INCLUDE
 
 # Do not change or remove the following line, it is needed for consistency checks:
-DATE_WHEN_GENERATED=1652838310
+DATE_WHEN_GENERATED=1657710465
 
 ###############################################################################
 #
@@ -24857,7 +24831,7 @@ $as_echo "$BOOT_JDK_VERSION" >&6; }
   if test "x$BOOT_JDK_FOUND" = xno; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # openjdk is the help tag: freetype, cups, pulse, alsa etc
+  # openjdk is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=openjdk
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -27320,7 +27294,7 @@ done
     if test "x$CC" = x; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # devkit is the help tag: freetype, cups, pulse, alsa etc
+  # devkit is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=devkit
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -29061,7 +29035,7 @@ done
     if test "x$CXX" = x; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # devkit is the help tag: freetype, cups, pulse, alsa etc
+  # devkit is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=devkit
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -44242,7 +44216,7 @@ fi
   if test "x$no_x" = xyes && test "x$X11_NOT_NEEDED" != xyes; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # x11 is the help tag: freetype, cups, pulse, alsa etc
+  # x11 is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=x11
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -44336,7 +44310,7 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
   if test "x$X11_A_OK" = xno && test "x$X11_NOT_NEEDED" != xyes; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # x11 is the help tag: freetype, cups, pulse, alsa etc
+  # x11 is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=x11
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -44596,7 +44570,7 @@ $as_echo "$CUPS_FOUND" >&6; }
     if test "x$CUPS_FOUND" = xno; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # cups is the help tag: freetype, cups, pulse, alsa etc
+  # cups is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=cups
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -48076,7 +48050,7 @@ $as_echo "$FREETYPE_LIB_PATH" >&6; }
       if test "x$FOUND_FREETYPE" != xyes; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # freetype is the help tag: freetype, cups, pulse, alsa etc
+  # freetype is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=freetype
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -48411,7 +48385,7 @@ $as_echo "$as_me: Using FREETYPE_CFLAGS=$FREETYPE_CFLAGS and FREETYPE_LIBS=$FREE
 
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # freetype is the help tag: freetype, cups, pulse, alsa etc
+  # freetype is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=freetype
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -48765,7 +48739,7 @@ done
     if test "x$ALSA_FOUND" = xno; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # alsa is the help tag: freetype, cups, pulse, alsa etc
+  # alsa is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=alsa
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
@@ -48874,7 +48848,7 @@ done
     if test "x$FONTCONFIG_FOUND" = xno; then
 
   # Print a helpful message on how to acquire the necessary build dependency.
-  # fontconfig is the help tag: freetype, cups, pulse, alsa etc
+  # fontconfig is the help tag: cups, pulse, alsa etc
   MISSING_DEPENDENCY=fontconfig
 
   if test "x$OPENJDK_BUILD_OS_ENV" = "xwindows.cygwin"; then
