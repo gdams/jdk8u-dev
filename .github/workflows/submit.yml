@@ -876,7 +876,6 @@ jobs:
           $env:Path = "$HOME\cygwin\cygwin64\bin;$HOME\cygwin\cygwin64\bin;$env:Path" ;
           $env:Path = $env:Path -split ";" -match "C:\\Windows|PowerShell|cygwin" -join ";" ;
           $env:BOOT_JDK = cygpath "$HOME/bootjdk/$env:BOOT_JDK_VERSION" ;
-          $env:FREETYPE_HOME = "$env:GITHUB_WORKSPACE\freetype" ;
           $env:JT_HOME = cygpath "$HOME/jtreg" ;
           & bash configure
           --with-toolchain-version=2017
@@ -1013,7 +1012,6 @@ jobs:
           $env:Path = "$HOME\cygwin\cygwin64\bin;$HOME\cygwin\cygwin64\bin;$env:Path" ;
           $env:Path = $env:Path -split ";" -match "C:\\Windows|PowerShell|cygwin" -join ";" ;
           $env:BOOT_JDK = cygpath "$HOME/bootjdk/$env:BOOT_JDK_VERSION" ;
-          $env:FREETYPE_HOME = "$env:GITHUB_WORKSPACE\freetype" ;
           $env:JT_HOME = cygpath "$HOME/jtreg" ;
           & bash configure
           --with-conf-name=windows-x86

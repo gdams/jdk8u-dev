@@ -430,7 +430,11 @@ var getJibProfilesProfiles = function (input, common, data) {
         "macosx-x64": {
             target_os: "macosx",
             target_cpu: "x64",
+<<<<<<< HEAD
             dependencies: ["devkit", "autoconf"],
+=======
+            dependencies: ["devkit", "freetype"],
+>>>>>>> 029327ac10d (8190464: OpenJDK on macosx needs to bundle freetype)
             configure_args: concat(common.configure_args_64bit, "--with-zlib=system",
                 "--with-macosx-version-max=10.7.0"),
         },
@@ -676,6 +680,7 @@ var getJibProfilesProfiles = function (input, common, data) {
         }
     });
 
+<<<<<<< HEAD
     // For open profiles, the non-debug jdk bundles, need an "open" prefix on the
     // remote bundle names, forming the word "openjdk". See JDK-8188789.
     common.main_profile_names.forEach(function (name) {
@@ -686,6 +691,8 @@ var getJibProfilesProfiles = function (input, common, data) {
                        profiles[openName].artifacts["jdk"].remote));
     });
 
+=======
+>>>>>>> 029327ac10d (8190464: OpenJDK on macosx needs to bundle freetype)
     // Profiles used to run tests. Used in JPRT and Mach 5.
     var testOnlyProfiles = {
         "run-test-jprt": {
@@ -810,9 +817,17 @@ var getJibProfilesDependencies = function (input, common) {
     var boot_jdk_platform = (input.build_os == "macosx" ? "osx" : input.build_os)
         + "-" + input.build_cpu;
 
+<<<<<<< HEAD
     var makeBinDir = (input.build_os == "windows"
         ? input.get("gnumake", "install_path") + "/cygwin/bin"
         : input.get("gnumake", "install_path") + "/bin");
+=======
+    var freetype_version = {
+        windows_x64: "2.7.1-v120+1.1",
+        windows_x86: "2.7.1-v120+1.1",
+        macosx_x64: "2.7.1-Xcode6.3-MacOSX10.9+1.0"
+    }[input.target_platform];
+>>>>>>> 029327ac10d (8190464: OpenJDK on macosx needs to bundle freetype)
 
     var dependencies = {
 
@@ -878,12 +893,17 @@ var getJibProfilesDependencies = function (input, common) {
         autoconf: {
             organization: common.organization,
             ext: "tar.gz",
+<<<<<<< HEAD
             revision: "2.69+1.0.1",
             module: (input.build_os == "windows"
                 ? "autoconf-" + input.build_osenv_platform
                 : "autoconf-" + input.build_platform),
             configure_args: "",
             environment_path: input.get("autoconf", "install_path")
+=======
+            revision: freetype_version,
+            module: "freetype-" + input.target_platform
+>>>>>>> 029327ac10d (8190464: OpenJDK on macosx needs to bundle freetype)
         },
 
         graphviz: {

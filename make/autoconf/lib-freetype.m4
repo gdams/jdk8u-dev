@@ -210,16 +210,83 @@ AC_DEFUN_ONCE([LIB_SETUP_FREETYPE],
       fi
     fi
 
-    if (test "x$FREETYPE_LIBS" = "x"); then
-      FREETYPE_LIBS="-L$FREETYPE_LIB_PATH -l$FREETYPE_BASE_NAME"
+    if test "x$FREETYPE_LIBS" = x; then
+      BASIC_FIXUP_PATH(FREETYPE_LIB_PATH)
+      if test "x$OPENJDK_TARGET_OS" = xwindows; then
+        FREETYPE_LIBS="$FREETYPE_LIB_PATH/$FREETYPE_BASE_NAME.lib"
+      else
+        FREETYPE_LIBS="-L$FREETYPE_LIB_PATH -l$FREETYPE_BASE_NAME"
+      fi
     fi
-  fi
 
+    # Try to compile it
+    AC_MSG_CHECKING([if we can compile and link with freetype])
+    AC_LANG_PUSH(C++)
+    PREV_CXXCFLAGS="$CXXFLAGS"
+    PREV_LIBS="$LIBS"
+    PREV_CXX="$CXX"
+    CXXFLAGS="$CXXFLAGS $FREETYPE_CFLAGS"
+    LIBS="$LIBS $FREETYPE_LIBS"
+    CXX="$FIXPATH $CXX"
+    AC_LINK_IFELSE([AC_LANG_SOURCE([[
+          #include<ft2build.h>
+          #include FT_FREETYPE_H
+          int main () {
+            FT_Init_FreeType(NULL);
+            return 0;
+          }
+        ]])],
+        [
+          AC_MSG_RESULT([yes])
+        ],
+        [
+          AC_MSG_RESULT([no])
+          AC_MSG_NOTICE([Could not compile and link with freetype. This might be a 32/64-bit mismatch.])
+          AC_MSG_NOTICE([Using FREETYPE_CFLAGS=$FREETYPE_CFLAGS and FREETYPE_LIBS=$FREETYPE_LIBS])
 
-    AC_MSG_RESULT([Using freetype: $FREETYPE_TO_USE])
+          HELP_MSG_MISSING_DEPENDENCY([freetype])
 
+          AC_MSG_ERROR([Can not continue without freetype. $HELP_MSG])
+        ]
+    )
+    CXXCFLAGS="$PREV_CXXFLAGS"
+    LIBS="$PREV_LIBS"
+    CXX="$PREV_CXX"
+    AC_LANG_POP(C++)
 
-  AC_SUBST(FREETYPE_TO_USE)
+    AC_MSG_CHECKING([if we should bundle freetype])
+    if test "x$BUNDLE_FREETYPE" = xyes; then
+      FREETYPE_BUNDLE_LIB_PATH="$FREETYPE_LIB_PATH"
+    fi
+    AC_MSG_RESULT([$BUNDLE_FREETYPE])
+
+    if test "x$BUNDLE_FREETYPE" = xyes; then
+      FREETYPE_LICENSE=""
+      AC_MSG_CHECKING([for freetype license])
+      if test "x$with_freetype_license" = "xyes"; then
+        AC_MSG_RESULT([no])
+        AC_MSG_ERROR([--with-freetype-license must have a value])
+      elif test "x$with_freetype_license" != "x"; then
+        AC_MSG_RESULT([$with_freetype_license])
+        FREETYPE_LICENSE="$with_freetype_license"
+        BASIC_FIXUP_PATH(FREETYPE_LICENSE)
+        if test ! -f "$FREETYPE_LICENSE"; then
+          AC_MSG_ERROR([$FREETYPE_LICENSE cannot be found])
+        fi
+      else
+        if test "x$with_freetype" != "x" && test -f $with_freetype/freetype.md; then
+          FREETYPE_LICENSE="$with_freetype/freetype.md"
+          AC_MSG_RESULT([$FREETYPE_LICENSE])
+          BASIC_FIXUP_PATH(FREETYPE_LICENSE)
+        else
+          AC_MSG_RESULT([no])
+        fi
+      fi
+    fi
+
+  fi # end freetype needed
+
+  AC_SUBST(FREETYPE_BUNDLE_LIB_PATH)
   AC_SUBST(FREETYPE_CFLAGS)
   AC_SUBST(FREETYPE_LIBS)
 ])
