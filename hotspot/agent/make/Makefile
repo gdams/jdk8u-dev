@@ -253,6 +253,19 @@ JAVA = $(JDK_HOME)/bin/java
 JAVADOC = $(JDK_HOME)/bin/javadoc
 RMIC = $(JDK_HOME)/bin/rmic
 
+ifeq ($(OPENJDK_TARGET_OS), macosx)
+	MIG_OUTPUT_DIR := $(OUTPUT_DIR)
+	MACH_EXC_HEADER := $(MIG_OUTPUT_DIR)/mach_exc.h
+	MACH_EXC_USER := $(MIG_OUTPUT_DIR)/mach_excUser.c
+  	MACH_EXC_SERVER := $(MIG_OUTPUT_DIR)/mach_excServer.c
+
+	$(MACH_EXC_SERVER): $(SDKROOT)/usr/include/mach/mach_exc.defs
+		$(MIG) -isysroot $(SDKROOT) -server $@ -user $(MACH_EXC_USER) \
+			-header $(MACH_EXC_HEADER) $(SDKROOT)/usr/include/mach/mach_exc.defs
+
+	TARGETS += $(MACH_EXC_SERVER)
+endif
+
 # Tagging it on because there's no reason not to run it
 all: filelist
 	@mkdir -p $(OUTPUT_DIR)
